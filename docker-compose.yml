@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   eve:
-    build: .
+    image: caiohsramos/eve_back
     environment:
       - MONGO_URI=mongodb://mongo
       - REDIS_URL=redis://redis
