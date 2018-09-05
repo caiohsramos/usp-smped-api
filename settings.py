@@ -90,7 +90,7 @@ people = {
         },
     }
 }
-
+'''
 works = {
     # if 'item_title' is not provided Eve will just strip the final
     # 's' from resource name, and use it as the item_title.
@@ -123,7 +123,7 @@ works = {
         },
     }
 }
-
+'''
 # The DOMAIN dict explains which resources will be available and how they will
 # be accessible to the API consumer.
 DOMAIN = {
