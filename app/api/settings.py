@@ -20,5 +20,6 @@ config = {
     'ITEM_METHODS': ['GET', 'PUT', 'DELETE'],
     'DOMAIN': {
         'accounts': accounts,
-    }
+    },
+    'IF_MATCH': False
 }
