@@ -2,24 +2,51 @@ stages:
   - build
   - deploy
 
-build:
+build-master:
   image: docker:latest
   stage: build
   script:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com 
-    - docker build -t registry.gitlab.com/labxp2018/smped-api .
-    - docker push registry.gitlab.com/labxp2018/smped-api
+    - docker build -t registry.gitlab.com/labxp2018/smped-api/master .
+    - docker push registry.gitlab.com/labxp2018/smped-api/master
   only:
     - master
   tags:
     - docker
 
-deploy:
+build-dev:
+  image: docker:latest
+  stage: build
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com 
+    - docker build -t registry.gitlab.com/labxp2018/smped-api/dev .
+    - docker push registry.gitlab.com/labxp2018/smped-api/dev
+  only:
+    - dev
+  tags:
+    - docker
+
+
+deploy-master:
   image: stackahoy/stackahoy-cli
   stage: deploy
   script:
     - stackahoy deploy --repo="5b95e5f54779cb0e000bd7d8" --token=$STACKAHOY_TOKEN --branch="master"
+  environment:
+    name: master
   only:
     - master
+  tags:
+    - docker
+
+deploy-dev:
+  image: stackahoy/stackahoy-cli
+  stage: deploy
+  script:
+    - stackahoy deploy --repo="5b95e5f54779cb0e000bd7d8" --token=$STACKAHOY_TOKEN --branch="dev"
+  environment:
+    name: dev
+  only:
+    - dev
   tags:
     - docker
