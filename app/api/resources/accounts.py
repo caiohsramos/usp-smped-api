@@ -2,7 +2,7 @@ from passlib.hash import pbkdf2_sha256
 from flask import current_app as api
 
 accounts = {
-    #'public_methods': [ 'POST' ],
+    'public_methods': [ 'POST' ],
     #'public_item_methods': [ '' ],
     'resource_methods': [ 'GET', 'POST' ],
     'item_methods': [ 'GET', 'PUT', 'PATCH', 'DELETE' ],
