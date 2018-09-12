@@ -1,4 +1,5 @@
 # API do backend
+[![pipeline status](https://gitlab.com/LABXP2018/smped-api/badges/master/pipeline.svg)](https://gitlab.com/LABXP2018/smped-api/commits/master)
 ## Obtenção de token
 O token é criado com o método `POST` na rota `/auth/tokens` passando um JSON com o formato:
 ```
