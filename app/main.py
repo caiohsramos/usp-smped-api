@@ -16,5 +16,6 @@ app = Eve(
 
 app.register_blueprint(TokenService, url_prefix='/auth')
 app.on_insert_accounts += secure_accounts
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
