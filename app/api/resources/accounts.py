@@ -29,7 +29,7 @@ accounts = {
             'required': True,
             'unique': True,
         },
-        'roles':{
+        'roles': {
             'type': 'list',
             'allowed': ['user', 'superuser', 'admin'],
             'required': True,

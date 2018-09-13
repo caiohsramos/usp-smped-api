@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 
 from api.resources.accounts import accounts
+from api.resources.forms import forms
 
 load_dotenv(find_dotenv())
 
@@ -20,6 +21,7 @@ config = {
     'ITEM_METHODS': ['GET', 'PUT', 'DELETE'],
     'DOMAIN': {
         'accounts': accounts,
+        'forms': forms,
     },
     'IF_MATCH': False
 }
