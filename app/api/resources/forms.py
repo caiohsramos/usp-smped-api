@@ -13,6 +13,7 @@ forms = {
             'data_relation': {
                 'resource': 'accounts',
                 'field': '_id',
+                'embeddable': True
             },
             'required': True
         },
@@ -38,7 +39,6 @@ forms = {
                     'label': {
                         'type': 'string',
                         'required': True,
-                        'unique': True
                     },
                     'type': {
                         'type': 'string',
