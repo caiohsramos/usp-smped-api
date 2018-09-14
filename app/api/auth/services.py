@@ -15,6 +15,12 @@ def issue_tokens():
     account = accounts.find_one({ 'username': data['username'] })
 
     if account and pbkdf2_sha256.verify(data['password'], account['password']):
+        if account['username'] == 'admin':
+            return jsonify({
+                'access_token': account['access_token'],
+                'refresh_token': account['refresh_token']
+            })
+
         access_token, refresh_token = generate_tokens(account['username'],account['roles'])
 
         account['access_token'] = access_token
@@ -41,6 +47,11 @@ def refresh_token():
         abort(401, description="The provided refresh token is invalid")
 
     try:
+        if account['username'] == 'admin':
+            return jsonify({
+                'access_token': account['access_token']
+            })
+
         #refresh_payload = jwt.decode(data['refresh_token'], os.environ.get('APP_SECRET', 'sekkret'), algorithms=['HS256'])
         access_token, _ = generate_tokens(account['username'],account['roles'])
 
