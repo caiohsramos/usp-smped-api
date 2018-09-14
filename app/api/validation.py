@@ -1,4 +1,5 @@
 import re
+from bson import ObjectId
 
 from eve.io.mongo import Validator
 
@@ -12,3 +13,10 @@ class MyValidator(Validator):
             return True
         else:
             return self._error('Must be a valid e-mail')
+
+
+    def _normalize_default_setter_generateid(self, document):
+        """
+        Generates a hash id for a field from a form.
+        """
+        return ObjectId()
