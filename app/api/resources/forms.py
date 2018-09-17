@@ -1,5 +1,5 @@
 forms = {
-    'resource_methods': ['GET', 'POST'],
+    'resource_methods': ['GET', 'POST', 'DELETE'],
     'public_item_methods': ['GET'],
     'item_methods': [ 'GET', 'PUT', 'PATCH', 'DELETE' ],
     'allowed_roles': ['superuser', 'admin'],
@@ -36,6 +36,11 @@ forms = {
             'schema': {
                 'type': 'dict',
                 'schema': {
+                    '_id': {
+                        'type': 'objectid',
+                        'default_setter': 'generateid',
+                        'required': True
+                    },
                     'label': {
                         'type': 'string',
                         'required': True,

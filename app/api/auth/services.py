@@ -52,10 +52,15 @@ def refresh_token():
                 'access_token': account['access_token']
             })
 
-        #refresh_payload = jwt.decode(data['refresh_token'], os.environ.get('APP_SECRET', 'sekkret'), algorithms=['HS256'])
+        #generate exception if refresh_token expired
+        jwt.decode(data['refresh_token'], os.environ.get('APP_SECRET', 'sekkret'), algorithms=['HS256'])
+        
         access_token, _ = generate_tokens(account['username'],account['roles'])
 
         account['access_token'] = access_token
+        query = {}
+        query['_id'] = account['_id']
+        accounts.replace_one(query,account)
 
         return jsonify({
             'access_token': access_token,
