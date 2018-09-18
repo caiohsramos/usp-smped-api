@@ -4,6 +4,7 @@ from dotenv import load_dotenv, find_dotenv
 
 from api.resources.accounts import accounts
 from api.resources.forms import forms
+from api.resources.answers import answers
 
 load_dotenv(find_dotenv())
 
@@ -22,6 +23,7 @@ config = {
     'DOMAIN': {
         'accounts': accounts,
         'forms': forms,
+        'answers': answers
     },
     'IF_MATCH': False
 }
