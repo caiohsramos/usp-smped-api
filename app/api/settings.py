@@ -23,5 +23,7 @@ config = {
         'accounts': accounts,
         'forms': forms,
     },
-    'IF_MATCH': False
+    'IF_MATCH': False,
+    'X_DOMAINS': '*',
+    'X_HEADERS': 'Authorization'
 }
