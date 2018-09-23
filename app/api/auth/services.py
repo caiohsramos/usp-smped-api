@@ -2,13 +2,58 @@ import os
 import jwt
 
 from passlib.hash import pbkdf2_sha256
-from flask import Blueprint, abort, request, jsonify, current_app as api
+from flask import Blueprint, abort, request, make_response, current_app, jsonify, current_app as api
+from datetime import timedelta
+from functools import update_wrapper
 
 from api.auth.utility import generate_tokens
 
+def crossdomain(origin=None, methods=None, headers=None,
+                max_age=21600, attach_to_all=True,
+                automatic_options=True):
+    if methods is not None:
+        methods = ', '.join(sorted(x.upper() for x in methods))
+    if headers is not None and not isinstance(headers, str):
+        headers = ', '.join(x.upper() for x in headers)
+    if not isinstance(origin, str):
+        origin = ', '.join(origin)
+    if isinstance(max_age, timedelta):
+        max_age = max_age.total_seconds()
+
+    def get_methods():
+        if methods is not None:
+            return methods
+
+        options_resp = current_app.make_default_options_response()
+        return options_resp.headers['allow']
+
+    def decorator(f):
+        def wrapped_function(*args, **kwargs):
+            if automatic_options and request.method == 'OPTIONS':
+                resp = current_app.make_default_options_response()
+            else:
+                resp = make_response(f(*args, **kwargs))
+            if not attach_to_all and request.method != 'OPTIONS':
+                return resp
+
+            resp.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+            h = resp.headers
+
+            h['Access-Control-Allow-Origin'] = origin
+            h['Access-Control-Allow-Methods'] = get_methods()
+            h['Access-Control-Max-Age'] = str(max_age)
+            if headers is not None:
+                h['Access-Control-Allow-Headers'] = headers
+            return resp
+
+        f.provide_automatic_options = False
+        return update_wrapper(wrapped_function, f)
+    return decorator
+
 TokenService = Blueprint('TokenService', __name__)
 
-@TokenService.route('/tokens', methods=['POST'])
+@TokenService.route('/tokens', methods=['POST','OPTIONS'])
+@crossdomain(origin='*')
 def issue_tokens():
     data = request.get_json()
     accounts = api.data.driver.db['accounts']
@@ -37,7 +82,8 @@ def issue_tokens():
         abort(401, description="The provided credentials are incorrect.")
 
 
-@TokenService.route('/refresh', methods=['POST'])
+@TokenService.route('/refresh', methods=['POST','OPTIONS'])
+@crossdomain(origin='*')
 def refresh_token():
     data = request.get_json()
     accounts = api.data.driver.db['accounts']
@@ -65,5 +111,6 @@ def refresh_token():
         return jsonify({
             'access_token': access_token,
         })
+         
     except jwt.ExpiredSignatureError:
         abort(401, description="The refresh token is expired.")

@@ -1,8 +1,8 @@
 FROM tiangolo/uwsgi-nginx-flask:python3.6
 
-ENV LISTEN_PORT 5000
+ENV LISTEN_PORT 3001
 
-EXPOSE 5000
+EXPOSE 3001
 
 COPY ./app /app
 
