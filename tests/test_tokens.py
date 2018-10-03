@@ -13,7 +13,7 @@ def test_decode():
     user = "username"
     roles = ["admin", "superuser"]
 
-    access_token, refresh_token = generate_tokens(user, roles)
+    access_token, _ = generate_tokens(user, roles)
     assert jwt.decode(access_token, verify=False)["username"] == user
     assert jwt.decode(access_token, verify=False)["role"] == roles
     
