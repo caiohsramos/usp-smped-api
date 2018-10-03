@@ -6,7 +6,7 @@ from flask import Blueprint, abort, request, make_response, current_app, jsonify
 from datetime import timedelta
 from functools import update_wrapper
 
-from app.api.auth.utility import generate_tokens
+from api.auth.utility import generate_tokens
 
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
