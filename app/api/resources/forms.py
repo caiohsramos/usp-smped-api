@@ -1,5 +1,6 @@
 forms = {
     'resource_methods': ['GET', 'POST', 'DELETE'],
+    'public_methods': ['GET'],
     'public_item_methods': ['GET'],
     'item_methods': [ 'GET', 'PUT', 'PATCH', 'DELETE' ],
     'allowed_roles': ['superuser', 'admin'],

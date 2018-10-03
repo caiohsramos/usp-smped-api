@@ -2,9 +2,9 @@ import os
 
 from dotenv import load_dotenv, find_dotenv
 
-from app.api.resources.accounts import accounts
-from app.api.resources.forms import forms
-from app.api.resources.answers import answers
+from api.resources.accounts import accounts
+from api.resources.forms import forms
+from api.resources.answers import answers
 
 load_dotenv(find_dotenv())
 
