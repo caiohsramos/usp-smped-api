@@ -1,5 +1,6 @@
 stages:
   - build
+  - test
   - deploy
 
 build-master:
@@ -25,6 +26,15 @@ build-dev:
   retry: 2
   only:
     - dev
+  tags:
+    - docker-dev
+  
+test:
+  image: python:3.6
+  stage: test
+  script:
+    - pip install -r requirements.txt 
+    - PYTHONPATH=$PWD/app pytest
   tags:
     - docker-dev
 
