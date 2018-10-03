@@ -1,4 +1,4 @@
-from app.main import server
+from main import server
 import pytest
 import tempfile
 

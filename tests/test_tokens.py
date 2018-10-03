@@ -1,4 +1,4 @@
-from app.api.auth.utility import generate_tokens
+from api.auth.utility import generate_tokens
 import jwt
 
 def test_generate():
