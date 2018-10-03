@@ -1,15 +1,12 @@
-import sys, os
-sys.path.insert(0, os.path.abspath('..'))
-
-from main import app
+from app.main import server
 import pytest
 import tempfile
 
 @pytest.fixture
 def client():
     #db_fd, app.config['DATABASE'] = tempfile.mkstemp()
-    app.config['TESTING'] = True
-    client = app.test_client()
+    server.config['TESTING'] = True
+    client = server.test_client()
 
     yield client
 
