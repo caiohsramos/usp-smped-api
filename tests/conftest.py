@@ -4,7 +4,7 @@ import pytest
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
-    client = server.test_client()
+    client = app.test_client()
 
     yield client
 
