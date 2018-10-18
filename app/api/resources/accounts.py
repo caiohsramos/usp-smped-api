@@ -20,8 +20,8 @@ accounts = {
         },
         'password': {
             'type': 'string',
-            'minlength': 5,
             'required': True,
+            'default': ''
         },
         'email': {
             'type': 'email',
@@ -35,7 +35,8 @@ accounts = {
             'required': True,
         },
         'access_token': { 'type': 'string', },
-        'refresh_token': { 'type': 'string', }
+        'refresh_token': { 'type': 'string', },
+        'first_login': { 'type':'boolean', 'default':True }
     },
     'datasource': {
         'projection': { 'password': 0, 'access_token': 0, 'refresh_token': 0, }, # Let's have some privacy, yes?
