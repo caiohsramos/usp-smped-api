@@ -1,9 +1,9 @@
 from passlib.hash import pbkdf2_sha256
-from flask import current_app as api
+from flask import current_app as api, abort
 
 accounts = {
     #'public_methods': [ 'POST' ],
-    #'public_item_methods': [ '' ],
+    'public_item_methods': [ 'PATCH' ],
     'resource_methods': [ 'GET', 'POST' ],
     'item_methods': [ 'GET', 'PUT', 'PATCH', 'DELETE' ],
     'additional_lookup': {
@@ -55,6 +55,17 @@ def secure_account(account):
         rounds=20000,
         salt_size=16
     )
+
+def secure_account_update(updates, original):
+    if not original['first_login']:
+        abort()
+    else:
+        updates['first_login'] = False
+        updates['password'] = pbkdf2_sha256.encrypt(
+            updates['password'],
+            rounds=20000,
+            salt_size=16
+        )
 
 def secure_accounts(accounts):
     for account in accounts:
