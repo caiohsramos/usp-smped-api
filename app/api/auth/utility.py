@@ -3,7 +3,7 @@ import os
 
 from datetime import datetime, timedelta
 
-def generate_tokens(username,roles, first_login):
+def generate_tokens(username, roles, first_login):
     """ A utility function to generate tokens for authorization.
 
     This function generates an access and refresh token given an accounts username.
