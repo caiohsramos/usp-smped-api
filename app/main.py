@@ -1,12 +1,15 @@
 import api.settings
 
 from eve import Eve
+from eve.auth import requires_auth
+from flask import request, abort, jsonify
 
 from api.validation import MyValidator
 from api.auth import MyAuth
 from api.auth.services import TokenService
 from api.resources.accounts import secure_accounts
 from api.resources.accounts import secure_account_update
+from api.email_service import Email
 
 app = Eve(
     __name__,
@@ -14,6 +17,18 @@ app = Eve(
     validator=MyValidator,
     settings=api.settings.config
 )
+
+@app.route('/email', methods = ['POST', 'OPTIONS'])
+@requires_auth('forms')
+def send_email():
+    data = request.get_json()
+    e = Email()
+    try:
+        e.send_email(data['emails'], data['subject'], data['message'])
+        return jsonify({'status': 'emails send'})
+    except:
+        abort(401, description="The payload was invalid")
+
 
 app.register_blueprint(TokenService, url_prefix='/auth')
 app.on_insert_accounts += secure_accounts
