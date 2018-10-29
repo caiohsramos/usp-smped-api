@@ -25,7 +25,7 @@ def send_email():
     e = Email()
     try:
         e.send_email(data['emails'], data['subject'], data['message'])
-        return jsonify({'status': 'emails send'})
+        return jsonify({'status': 'emails sent'})
     except:
         abort(401, description="The payload was invalid")
 
