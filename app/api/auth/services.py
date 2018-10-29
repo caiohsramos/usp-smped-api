@@ -66,7 +66,7 @@ def issue_tokens():
                 'refresh_token': account['refresh_token']
             })
 
-        access_token, refresh_token = generate_tokens(account['username'],account['roles'])
+        access_token, refresh_token = generate_tokens(account['username'],account['roles'],account['first_login'])
 
         account['access_token'] = access_token
         account['refresh_token'] = refresh_token
@@ -101,7 +101,7 @@ def refresh_token():
         #generate exception if refresh_token expired
         jwt.decode(data['refresh_token'], os.environ.get('APP_SECRET', 'sekkret'), algorithms=['HS256'])
         
-        access_token, _ = generate_tokens(account['username'],account['roles'])
+        access_token, _ = generate_tokens(account['username'],account['roles'],account['first_login'])
 
         account['access_token'] = access_token
         query = {}
