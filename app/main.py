@@ -22,6 +22,7 @@ app = Eve(
 @requires_auth('forms')
 def send_email():
     data = request.get_json()
+    print(data)
     e = Email()
     try:
         e.send_email(data['emails'], data['subject'], data['message'])
