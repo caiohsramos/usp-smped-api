@@ -10,6 +10,7 @@ from api.auth.services import TokenService
 from api.resources.accounts import secure_accounts
 from api.resources.accounts import secure_account_update
 from api.email_service import Email
+from api.auth.services import crossdomain
 
 app = Eve(
     __name__,
@@ -20,6 +21,7 @@ app = Eve(
 
 @app.route('/email', methods = ['POST', 'OPTIONS'])
 @requires_auth('forms')
+@crossdomain(origin='*')
 def send_email():
     data = request.get_json()
     e = Email()
