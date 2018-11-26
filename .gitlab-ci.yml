@@ -10,9 +10,9 @@ build-master:
   stage: build
   script:
     - export DOCKER_HOST=tcp://docker:2375/
-    - docker build -t registry.gitlab.com/labxp2018/smped-api/master .
+    - docker build -t registry.gitlab.com/labxp2018/smped-api/master:$CI_COMMIT_SHA .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com 
-    - docker push registry.gitlab.com/labxp2018/smped-api/master
+    - docker push registry.gitlab.com/labxp2018/smped-api/master:$CI_COMMIT_SHA
   retry: 2
   only:
     - master
@@ -26,9 +26,9 @@ build-dev:
   stage: build
   script:
     - export DOCKER_HOST=tcp://docker:2375/
-    - docker build -t registry.gitlab.com/labxp2018/smped-api/dev .
+    - docker build -t registry.gitlab.com/labxp2018/smped-api/dev:$CI_COMMIT_SHA .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker push registry.gitlab.com/labxp2018/smped-api/dev
+    - docker push registry.gitlab.com/labxp2018/smped-api/dev:$CI_COMMIT_SHA
   retry: 2
   only:
     - dev
