@@ -46,11 +46,9 @@ test:
 
 
 deploy-master:
+  image: lachlanevenson/k8s-kubectl:latest
   stage: deploy
   script:
-    - apt-get install curl
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl
     - kubectl get pods
   environment:
     name: master
@@ -60,11 +58,9 @@ deploy-master:
     - kubernetes
 
 deploy-dev:
+  image: lachlanevenson/k8s-kubectl:latest
   stage: deploy
   script:
-    - apt-get install curl
-    - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-    - chmod +x ./kubectl
     - kubectl get pods
   environment:
     name: dev
