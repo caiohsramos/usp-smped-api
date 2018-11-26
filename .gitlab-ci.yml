@@ -27,7 +27,7 @@ build-dev:
   only:
     - dev
   tags:
-    - docker-dev
+    - docker
   
 test:
   image: python:3.6
@@ -36,7 +36,7 @@ test:
     - pip install -r app/requirements.txt 
     - PYTHONPATH=$PWD/app pytest
   tags:
-    - docker-dev
+    - docker
 
 
 deploy-master:
@@ -61,4 +61,4 @@ deploy-dev:
   only:
     - dev
   tags:
-    - docker-dev
+    - docker
