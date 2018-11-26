@@ -4,8 +4,12 @@ stages:
   - deploy
 
 build-master:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: build
   script:
+    - export DOCKER_HOST=tcp://docker:2375/
     - docker build -t registry.gitlab.com/labxp2018/smped-api/master .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com 
     - docker push registry.gitlab.com/labxp2018/smped-api/master
@@ -16,8 +20,12 @@ build-master:
     - docker
 
 build-dev:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: build
   script:
+    - export DOCKER_HOST=tcp://docker:2375/
     - docker build -t registry.gitlab.com/labxp2018/smped-api/dev .
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker push registry.gitlab.com/labxp2018/smped-api/dev
