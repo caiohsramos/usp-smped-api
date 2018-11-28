@@ -3,7 +3,7 @@ stages:
   - test
   - deploy
 
-build-master:
+build:
   image: docker:latest
   services:
     - docker:dind
@@ -18,22 +18,6 @@ build-master:
     - master
   tags:
     - docker
-
-build-dev:
-  image: docker:latest
-  services:
-    - docker:dind
-  stage: build
-  script:
-    - export DOCKER_HOST=tcp://docker:2375/
-    - docker build -t registry.gitlab.com/labxp2018/smped-api/dev:$CI_COMMIT_SHA .
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
-    - docker push registry.gitlab.com/labxp2018/smped-api/dev:$CI_COMMIT_SHA
-  retry: 2
-  only:
-    - dev
-  tags:
-    - docker
   
 test:
   image: python:3.6
@@ -45,7 +29,7 @@ test:
     - docker
 
 
-deploy-master:
+deploy:
   image: alpine
   before_script:
     - apk update
@@ -66,23 +50,3 @@ deploy-master:
   tags:
     - docker
 
-deploy-dev:
-  image: alpine
-  before_script:
-    - apk update
-    - apk add curl
-    - curl -o /usr/bin/kubectl -LO https://storage.googleapis.com/kubernetes-release/release/v1.7.1/bin/linux/amd64/kubectl
-    - chmod +x /usr/bin/kubectl
-  stage: deploy
-  script:
-    - kubectl config set-credentials $KUBE_USERNAME/smped --username=$KUBE_USERNAME --password=$KUBE_PASSWORD
-    - kubectl config set-cluster smped --insecure-skip-tls-verify=true --server=https://$KUBE_SERVER
-    - kubectl config set-context default/smped/$KUBE_USERNAME --user=$KUBE_USERNAME/smped --namespace=default --cluster=smped
-    - kubectl config use-context default/smped/$KUBE_USERNAME
-    - kubectl set image deployment/smped-api smped-api=registry.gitlab.com/labxp2018/smped-api/dev:$CI_COMMIT_SHA
-  environment:
-    name: dev
-  only:
-    - dev
-  tags:
-    - docker
