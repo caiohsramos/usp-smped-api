@@ -10,10 +10,10 @@ forms = {
             'required': True
         },
         'owner': {
-            'type': 'objectid',
+            'type': 'string',
             'data_relation': {
                 'resource': 'accounts',
-                'field': '_id',
+                'field': 'username',
                 'embeddable': True
             },
             'required': True

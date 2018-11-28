@@ -27,5 +27,5 @@ config = {
     },
     'IF_MATCH': False,
     'X_DOMAINS': '*',
-    'X_HEADERS': 'Authorization'
+    'X_HEADERS': ['Authorization','Content-type']
 }
