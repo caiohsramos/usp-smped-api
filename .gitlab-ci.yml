@@ -58,7 +58,7 @@ deploy-master:
     - kubectl config set-cluster smped --insecure-skip-tls-verify=true --server=https://$KUBE_SERVER
     - kubectl config set-context default/smped/$KUBE_USERNAME --user=$KUBE_USERNAME/smped --namespace=default --cluster=smped
     - kubectl config use-context default/smped/$KUBE_USERNAME
-    - kubectl get pods
+    - - kubectl set image deployment/smped-api smped-api=registry.gitlab.com/labxp2018/smped-api/master:$CI_COMMIT_SHA
   environment:
     name: master
   only:
@@ -79,7 +79,7 @@ deploy-dev:
     - kubectl config set-cluster smped --insecure-skip-tls-verify=true --server=https://$KUBE_SERVER
     - kubectl config set-context default/smped/$KUBE_USERNAME --user=$KUBE_USERNAME/smped --namespace=default --cluster=smped
     - kubectl config use-context default/smped/$KUBE_USERNAME
-    - kubectl get pods
+    - kubectl set image deployment/smped-api smped-api=registry.gitlab.com/labxp2018/smped-api/dev:$CI_COMMIT_SHA
   environment:
     name: dev
   only:
