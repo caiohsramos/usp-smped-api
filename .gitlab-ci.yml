@@ -49,6 +49,10 @@ deploy-master:
   image: lachlanevenson/k8s-kubectl:latest
   stage: deploy
   script:
+    - kubectl config set-credentials $KUBE_USERNAME/smped --username=$KUBE_USERNAME --password=$KUBE_PASSWORD
+    - kubectl config set-cluster smped --insecure-skip-tls-verify=true --server=https://$KUBE_SERVER
+    - kubectl config set-context default/smped/$KUBE_USERNAME --user=$KUBE_USERNAME/smped --namespace=default --cluster=smped
+    - kubectl config use-context default/smped/$KUBE_USERNAME
     - kubectl get pods
   environment:
     name: master
@@ -61,6 +65,10 @@ deploy-dev:
   image: lachlanevenson/k8s-kubectl:latest
   stage: deploy
   script:
+    - kubectl config set-credentials $KUBE_USERNAME/smped --username=$KUBE_USERNAME --password=$KUBE_PASSWORD
+    - kubectl config set-cluster smped --insecure-skip-tls-verify=true --server=https://$KUBE_SERVER
+    - kubectl config set-context default/smped/$KUBE_USERNAME --user=$KUBE_USERNAME/smped --namespace=default --cluster=smped
+    - kubectl config use-context default/smped/$KUBE_USERNAME
     - kubectl get pods
   environment:
     name: dev
