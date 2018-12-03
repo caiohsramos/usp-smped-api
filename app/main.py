@@ -21,7 +21,7 @@ app = Eve(
 
 @app.route('/email', methods = ['POST', 'OPTIONS'])
 @requires_auth('forms')
-@crossdomain(origin='*')
+@crossdomain(origin='*', headers='*')
 def send_email():
     data = request.get_json()
     e = Email()
