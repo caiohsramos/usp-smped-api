@@ -1,4 +1,4 @@
-# API Eve backend
+# API Smped
 [![pipeline status](https://gitlab.com/LABXP2018/smped-api/badges/master/pipeline.svg)](https://gitlab.com/LABXP2018/smped-api/commits/master)
 # Instalação e execução
 Para instalar as dependências
@@ -13,6 +13,10 @@ Para executar os testes
 ```
 PYTHONPATH=$PWD/app pytest
 ```
+# Integração contínua
+* Os testes são executados para todos os commits feitos, independente da branch.
+* As mudanças devem passar pela branch `dev` através de Merge Requests antes de irem para a master.
+* O pipeline de `build` e `deploy` só é executado na `master`. A imagem é publicada no _registry_ do GitLab e atualizada no cluster Kubernetes.
 # Rotas
 ## Auth
 O token é criado com o método `POST` na rota `/auth/tokens` passando um JSON com o formato:
